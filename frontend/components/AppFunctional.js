@@ -1,14 +1,17 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
+import e from 'express';
 
 // Suggested initial states
-const initialMessage = ''
-const initialEmail = ''
-const initialSteps = 0
-const initialIndex = 4 // the index the "B" is at
+const initialMessage = '';
+const initialEmail = '';
+const initialSteps = 0;
+const initialIndex = 4; // the index the "B" is at
 
 export default function AppFunctional(props) {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
+  
 
   function getXY() {
     // It it not necessary to have a state to track the coordinates.

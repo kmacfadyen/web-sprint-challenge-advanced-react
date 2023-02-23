@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 // Suggested initial states
 const initialMessage = ''
@@ -16,6 +17,15 @@ const initialState = {
 export default class AppClass extends React.Component {
   // THE FOLLOWING HELPERS ARE JUST RECOMMENDATIONS.
   // You can delete them and build your own logic from scratch.
+  constructor(props) {
+    super();
+    this.state = {
+
+    }
+  }
+
+  // const [formValues, setFormValues] = useState(initialValue);
+
 
   getXY = () => {
     // It it not necessary to have a state to track the coordinates.
@@ -28,8 +38,13 @@ export default class AppClass extends React.Component {
     // returns the fully constructed string.
   }
 
-  reset = () => {
+  reset = (e) => {
     // Use this helper to reset all states to their initial values.
+    e.preventDefault();
+    message: initialMessage;
+    email: initialEmail;
+    index: initialIndex;
+    steps: initialSteps;
   }
 
   getNextIndex = (direction) => {
@@ -45,10 +60,16 @@ export default class AppClass extends React.Component {
 
   onChange = (evt) => {
     // You will need this to update the value of the input.
+    this.setState({
+      ...this.state,
+      input: e.target.value
+    });
   }
 
   onSubmit = (evt) => {
     // Use a POST request to send a payload to the server.
+    evt.preventDefault();
+    // this.props
   }
 
   render() {
@@ -76,7 +97,7 @@ export default class AppClass extends React.Component {
           <button id="up">UP</button>
           <button id="right">RIGHT</button>
           <button id="down">DOWN</button>
-          <button id="reset">reset</button>
+          <button onClick={this.reset} id="reset">reset</button>
         </div>
         <form>
           <input id="email" type="email" placeholder="type email"></input>
