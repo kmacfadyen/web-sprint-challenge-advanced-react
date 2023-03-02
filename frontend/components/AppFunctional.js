@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import e from 'express';
 
 // Suggested initial states
 const initialMessage = '';

@@ -109,14 +109,14 @@ export default class AppClass extends React.Component {
         }
         break
       case 'LEFT':
-        if(this.state.y === 1) {
+        if(this.state.x === 1) {
           this.setState({ ...this.state, error: `You can't go left`})
         } else {
           this.setState({ ...this.state, error: '', y: this.state.x - 1, steps: this.state.steps + 1})
         }
         break
       case 'RIGHT':
-        if(this.state.y === 1) {
+        if(this.state.x === 3) {
           this.setState({ ...this.state, error: `You can't go right`})
         } else {
           this.setState({ ...this.state, error: '', y: this.state.x + 1, steps: this.state.steps + 1})
@@ -153,6 +153,32 @@ export default class AppClass extends React.Component {
     // Use a POST request to send a payload to the server.
     evt.preventDefault();
     // this.props
+
+    axios.post(`http://localhost:9000/api/result`, {email: this.state.email,
+      steps: this.state.steps,
+      x: this.state.x,
+      y: this.state.y 
+    })
+    .then(res => {
+      this.setState({
+        ...this.state, error: res.data.message, email: ''
+      })
+    })
+    .catch(() => {
+      if(this.state.email === '') {
+        this.setState({ ...this.state, error: 'Ouch: email is required'})
+      }
+      else if(this.state.email[this.state.email.length -4 !== '.']) {
+        this.setState({ ...this.state, error: 'Ouch: email must be a valid email'})
+      }
+      else {
+        this.setState({
+          ...this.state,
+          error: `${this.state.email} failure #71`,
+          email: ''
+        })
+      }
+    })
   }
 
   render() {
@@ -192,8 +218,8 @@ export default class AppClass extends React.Component {
           <button id="reset" onClick={this.reset}>reset</button>
         </div>
         <form>
-          <input id="email" type="email" value={this.state.email} placeholder="type email"></input>
-          <input id="submit" type="submit"></input>
+          <input id="email" type="email" value={this.state.email} placeholder="type email" onChange={this.onChange}></input>
+          <input id="submit" type="submit" onClick={this.onSubmit}></input>
         </form>
       </div>
     )
