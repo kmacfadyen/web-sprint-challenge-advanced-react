@@ -168,17 +168,17 @@ export default class AppClass extends React.Component {
     // newBoard[evt] = this.state.
 
 
-    let errorLimit = this.movementCheck(position);
+    let errorLimit = this.movementCheck(direction);
     let stepCounter = this.state.steps;
     let holder = this.state.active;
     let newGrid = [];
 
-    // if(errorLimit.includes(position)) {
-    //   this.setState({ ...this.state, message: `You can't go ${direction}`
-    //   })
-    // }
+    if(errorLimit.includes(position)) {
+      this.setState({ ...this.state, message: `You can't go ${direction}`
+      })
+    }
 
-    // else {
+    else {
     switch(direction) {
       case 'up':
         // if(this.state.y === 1) {
@@ -244,7 +244,7 @@ export default class AppClass extends React.Component {
           board: newGrid  
         });
         break;
-    // }
+    }
   }
     
 
@@ -260,47 +260,51 @@ export default class AppClass extends React.Component {
 
 
 
-  onSubmit = (evt) => {
-    // Use a POST request to send a payload to the server.
-    evt.preventDefault();
-    // this.props
-
-    axios.post(`http://localhost:9000/api/result`, {email: this.state.email,
-      steps: steps,
-      x: x,
-      y: y,
-      email: email 
-    })
-    .then(res => {
-      this.setState({
-        ...this.state, message: res.data.message, email: ''
-      })
-    })
-    .catch(() => {
-      if(this.state.email === '') {
-        this.setState({ ...this.state, message: 'Ouch: email is required'})
-      }
-      else if(this.state.email[this.state.email.length -4 !== '.']) {
-        this.setState({ ...this.state, message: 'Ouch: email must be a valid email'})
-      }
-      else {
-        this.setState({
-          ...this.state,
-          message: `${this.state.email} failure #71`,
-          email: ''
-        })
-      }
-    })
-  }
+  
 
   render() {
     const { className } = this.props
     const { message, email, steps, active, board } = this.state
+    let [x, y] = this.getXY(active)
+
+    const onSubmit = (evt) => {
+      // Use a POST request to send a payload to the server.
+      evt.preventDefault();
+      // this.props
+  
+      axios.post(`http://localhost:9000/api/result`, {email: this.state.email,
+        steps: steps,
+        x: x,
+        y: y,
+        email: email 
+      })
+      .then(res => {
+        this.setState({
+          ...this.state, message: res.data.message, email: ''
+        })
+      })
+      .catch(() => {
+        if(this.state.email === '') {
+          this.setState({ ...this.state, message: 'Ouch: email is required'})
+        }
+        else if(this.state.email[this.state.email.length -4 !== '.']) {
+          this.setState({ ...this.state, message: 'Ouch: email must be a valid email'})
+        }
+        else {
+          this.setState({
+            ...this.state,
+            message: `${this.state.email} failure #71`,
+            email: ''
+          })
+        }
+      })
+    }
+
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates ({this.state.x}, {this.state.y}) </h3>
-          <h3 id="steps">You moved {this.state.steps} times</h3>
+          <h3 id="coordinates">Coordinates ({x}, {y}) </h3>
+          <h3 id="steps">You moved {steps} {steps === 1 ? 'time' : 'times'}</h3>
         </div>
         <div id="grid">
           {
@@ -325,7 +329,7 @@ export default class AppClass extends React.Component {
           <div className='square'></div>
           <div className='square'></div>
           <div className='square'></div> */} 
-        // </div>
+         </div>
         <div className="info">
           <h3 id="message">{message}</h3>
         </div>
@@ -338,7 +342,7 @@ export default class AppClass extends React.Component {
         </div>
         <form>
           <input id="email" type="email" value={this.state.email} placeholder="type email" onChange={this.onChange}></input>
-          <input id="submit" type="submit" onClick={this.onSubmit}></input>
+          <input id="submit" type="submit"></input>
         </form>
       </div>
     )
