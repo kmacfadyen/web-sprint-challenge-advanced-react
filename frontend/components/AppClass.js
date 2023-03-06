@@ -303,7 +303,7 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates ({x}, {y}) </h3>
+          <h3 id="coordinates">Coordinates ({x},{y})</h3>
           <h3 id="steps">You moved {steps} {steps === 1 ? 'time' : 'times'}</h3>
         </div>
         <div id="grid">
@@ -340,7 +340,7 @@ export default class AppClass extends React.Component {
           <button id="down" onClick={() => {this.move(active, 'down')}}>DOWN</button>
           <button id="reset" onClick={this.reset}>reset</button>
         </div>
-        <form>
+        <form onSubmit={onSubmit}>
           <input id="email" type="email" value={this.state.email} placeholder="type email" onChange={this.onChange}></input>
           <input id="submit" type="submit"></input>
         </form>
