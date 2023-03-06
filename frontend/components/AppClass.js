@@ -17,7 +17,7 @@ const initialState = {
   active: 4,
   // x: initialX,
   // y: initialY,
-  board: ['0', '0', '0', '0', '1', '0', '0', '0', '0']
+  board: [0, 0, 0, 0, 1, 0, 0, 0, 0]
 }
 
 let array1 = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -313,7 +313,7 @@ export default class AppClass extends React.Component {
                 return (
                   <div className={this.squareClass(each)}>{this.fillSquare(each)}</div>
               )})
-              }
+          }
            
               {/* // <div onClick={() => this.move(idx)} key={idx} className={`square${idx === 4 ? ' active' : ''}`}>
               //   {idx === 4 ? 'B' : null}
