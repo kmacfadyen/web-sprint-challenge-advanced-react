@@ -283,20 +283,30 @@ export default class AppClass extends React.Component {
           ...this.state, message: res.data.message, email: ''
         })
       })
-      .catch(() => {
-        if(this.state.email === '') {
-          this.setState({ ...this.state, message: 'Ouch: email is required'})
-        }
-        else if(this.state.email[this.state.email.length -4 !== '.']) {
-          this.setState({ ...this.state, message: 'Ouch: email must be a valid email'})
-        }
-        else {
-          this.setState({
-            ...this.state,
-            message: `${this.state.email} failure #71`,
-            email: ''
-          })
-        }
+      .catch(err => {
+        this.setState({
+          ...this.state,
+          message: err.response.data.message
+        })
+
+        // this.setState({
+        //   ...this.state,
+        //   email: ''
+        // })
+
+        // if(this.state.email === '') {
+        //   this.setState({ ...this.state, message: 'Ouch: email is required'})
+        // }
+        // else if(this.state.email[this.state.email.length -4 !== '.']) {
+        //   this.setState({ ...this.state, message: 'Ouch: email must be a valid email'})
+        // }
+        // else {
+        //   this.setState({
+        //     ...this.state,
+        //     message: `${this.state.email} failure #71`,
+        //     email: ''
+        //   })
+        // }
       })
     }
 

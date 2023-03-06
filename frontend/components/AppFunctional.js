@@ -183,18 +183,23 @@ export default function AppFunctional(props) {
     })
     .catch(err => {
       // setMessage(err.response.data.message);
-      if(email === '') {
-        setMessage('Ouch: email is required');
-        setEmail('');
-      }
-      else if(email[email.length -4 !== '.']) {
-        setMessage('Ouch: email must be a valid email');
-        setEmail('');
-      }
-      else {
-        setMessage(`${email} failure #71`);
-        setEmail('');
-      }})
+      setMessage(err.response.data.message);
+      setEmail('');
+
+
+      // if(email === '') {
+      //   setMessage('Ouch: email is required');
+      //   setEmail('');
+      // }
+      // else if(email[email.length -4 !== '.']) {
+      //   setMessage('Ouch: email must be a valid email');
+      //   setEmail('');
+      // }
+      // else {
+      //   setMessage(`${email} failure #71`);
+      //   setEmail('');
+      // }
+    })
 
       evt.preventDefault(); 
     }
