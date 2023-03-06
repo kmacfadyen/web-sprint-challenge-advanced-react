@@ -53,7 +53,7 @@ export default function AppFunctional(props) {
 
   const onChange = (evt) => {
     // You will need this to update the value of the input.
-    const { value } = e.target;
+    const { value } = evt.target;
     setEmail(value);
   }
 
@@ -182,10 +182,23 @@ export default function AppFunctional(props) {
       evt.preventDefault();
     })
     .catch(err => {
-      setMessage(err.response.data.message);
+      // setMessage(err.response.data.message);
+      if(email === '') {
+        setMessage('Ouch: email is required');
+        setEmail('');
+      }
+      else if(email[email.length -4 !== '.']) {
+        setMessage('Ouch: email must be a valid email');
+        setEmail('');
+      }
+      else {
+        setMessage(`${email} failure #71`);
+        setEmail('');
+      }})
+
       evt.preventDefault(); 
-    })
-  }
+    }
+  
  
 
   function onSubmit(evt) {
@@ -217,7 +230,7 @@ export default function AppFunctional(props) {
           <button id="reset" onClick={()=>reset()}>reset</button>
       </div>
       <form onSubmit={onSubmit1}>
-        <input id="email" type="email" placeholder="type email"></input>
+        <input id="email" type="email" placeholder="type email" value={email} onChange={onChange}></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
